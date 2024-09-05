@@ -59,10 +59,10 @@ const DemandList = () => {
         trigger={null}
         collapsible
         collapsed={collapsed}
-        style={{ backgroundColor: 'white' }} // Change sidebar color here
+        style={{ backgroundColor: 'white' , height:'92vh' , overflowY: 'scroll' }} // Change sidebar color here
       >
         <div className="demo-logo-vertical"></div>
-            <div style={{ display: 'flex',  alignItems: 'center', marginTop: '15px', marginLeft:'20px' }}>
+            {/* <div style={{ display: 'flex',  alignItems: 'center', marginTop: '15px', marginLeft:'20px' }}>
               {!collapsed && (
                 <>
                   <Input placeholder="Search" style={{ width: 100, marginBottom: '5px',padding: '5px' }} />
@@ -83,7 +83,7 @@ const DemandList = () => {
                 
                 </>
               )}
-            </div>
+            </div> */}
         <h4
           style={{
             fontSize: '20px',
@@ -106,6 +106,7 @@ const DemandList = () => {
             { key: '4', label: '18224568' },
             { key: '5', label: '18224569' },
             { key: '6', label: '18224570' },
+           
           ]}
         />
       </Sider>
@@ -183,8 +184,8 @@ const DemandList = () => {
         <Content
           style={{
             margin: '10px 8px',
-            padding: 24,
-            minHeight: 580,
+            padding: 15,
+            minHeight: 500,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}

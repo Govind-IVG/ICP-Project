@@ -110,7 +110,7 @@ const Consinav = () => {
           trigger={null}
           collapsible
           collapsed={collapsed}
-          style={{ backgroundColor: 'white' }} // Change sidebar color here
+          style={{ backgroundColor: 'white',height:'92vh' , overflowY: 'scroll' }} // Change sidebar color here
         >
 
           <div style={{ padding: '16px', textAlign: 'left' }}>
@@ -248,8 +248,8 @@ const Consinav = () => {
           <Content
             style={{
               margin: '10px 8px',
-              padding: 24,
-              minHeight: 580,
+              padding: 15,
+            minHeight: 500,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}
