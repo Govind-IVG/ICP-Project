@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Table, Button, Modal } from 'antd';
-import { RightOutlined,ArrowLeftOutlined } from '@ant-design/icons';
+import { Table, Button, Row, Col, Modal } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom';
+
+
+// ---------------------------------Table Array Start Here 
 
 const columns = [
   {
@@ -25,45 +28,51 @@ const columns = [
     dataIndex: 'item_Name',
   },
   {
-    title: 'Qty',
-    dataIndex: 'qty',
+    title: 'Open Qty',
+    dataIndex: 'open_qty',
   },
   {
     title: 'Unit',
     dataIndex: 'unit',
   },
   {
+    title: 'C Qty',
+    dataIndex: 'c_qty',
+  },
+  {
+    title: 'Avl Qty',
+    dataIndex: 'avl_qty',
+  },
+  {
     title: 'Date',
     dataIndex: 'date',
   },
-  {
-    title: 'Shipped by',
-    dataIndex: 'shipped_by',
-  },
-  {
-    title: 'Availability LMC',
-    dataIndex: 'availability_LMC',
-  },
 ];
 
-
 const data = [];
-for (let i = 0; i < 46; i++) {
+for (let i = 0; i < 6; i++) {
   data.push({
     key: i,
     icp_item_code: `4827988${i}`,
     vendor: `John joe${i}`,
     vendor_Code: `1227244${i}`,
     item_Name: `Lorem`,
-    qty: `1${i}`,
+    open_qty: `1${i}`,
     unit: `Kg`,
-    date: ' 12/11/23',
-    shipped_by: 'ICP',
-    availability_LMC: `Check`,
+    c_qty: `ICP`,
+    avl_qty: `Check`,
+    date: '12/11/23',
   });
 }
 
-const App = () => {
+const Createconsignment = () => {
+  const handleAddToConsignment = () => {
+    // Handle the add to consignment logic here
+    console.log('Add to consignment clicked');
+  };
+
+  // ---------------------------------Table Array End Here 
+
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const onSelectChange = (newSelectedRowKeys) => {
@@ -115,18 +124,18 @@ const App = () => {
 
   const success = () => {
     Modal.success({
-      content: 'Demand Order Created - 1817648981',
+      content: 'Consignment Number Created Your consignment number is 18224533. Thank you for your submission!',
     });
   };
 
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState('Would you like to post Demand Order');
+  const [modalText, setModalText] = useState('Confirm consignment Order Submission Are you sure you want to post this consignment order? Please review all details before proceeding.');
   const showModal = () => {
     setOpen(true);
   };
   const handleOk = () => {
-    setModalText('Would you like to post Demand Order');
+    setModalText('Confirm consignment Order Submission Are you sure you want to post this consignment order? Please review all details before proceeding.');
     setConfirmLoading(true);
     setTimeout(() => {
       setOpen(false);
@@ -139,29 +148,30 @@ const App = () => {
     setOpen(false);
   };
 
+
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/demand-list/upload");
+    navigate("/consignment/consitable.....");
   };
 
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <>
       <Table
-        rowSelection={rowSelection}
         columns={columns}
         dataSource={data}
-        scroll={{ y: 440 }}  // Set the height of the table here
+        scroll={{ y: 440 }} // Adjust the height here
+        pagination={{ pageSize: 10 }} // Pagination setup
       />
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px'  }}>
-        <Button type="primary"  icon={<ArrowLeftOutlined />}
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px' }}>
+        <Button type="primary" icon={<ArrowLeftOutlined />}
         onClick={handleBack}
         >
-      Back
-    </Button>
+          Back
+        </Button>
         <Button type="primary" onClick={showModal}>
-          Post Demand
+          Create Consignment
         </Button>
         <Modal
           title="Title"
@@ -173,8 +183,8 @@ const App = () => {
           <p>{modalText}</p>
         </Modal>
       </div>
-    </div>
+    </>
   );
 };
 
-export default App;
+export default Createconsignment;

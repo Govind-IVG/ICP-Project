@@ -10,7 +10,7 @@ const items1 = [
   { key: '/picking-task', label: 'Picking Task' },
   { key: '/packing-item', label: 'Packing Item' },
   { key: '/dispatched-order', label: 'Dispatched Order' },
-  { key: '/profile', label: 'Profile' },
+  // { key: '/profile', label: 'Profile' },
   { key: '/settings', label: 'Settings' },
   { key: '/work-status', label: 'Work Status' }
 ];
@@ -36,6 +36,7 @@ const Home = () => {
 
   return (
     <>
+ 
       <Header
         style={{
           display: 'flex',
@@ -52,6 +53,7 @@ const Home = () => {
             flex: 1,
             minWidth: 0,
           }}
+          
         >
           {items1.map(item => (
             <Menu.Item key={item.key}>
@@ -60,6 +62,8 @@ const Home = () => {
           ))}
         </Menu>
 
+
+
         <Space>
           <Dropdown overlay={menu} trigger={['click']}
           overlayStyle={{ width: 220 }} // Set your desired width here
@@ -67,6 +71,7 @@ const Home = () => {
             <Avatar size={40} shape="square" src="https://img.freepik.com/free-photo/black-man-posing_23-2148171639.jpg" />
           </Dropdown>
         </Space>
+        
       </Header>
     </>
   );

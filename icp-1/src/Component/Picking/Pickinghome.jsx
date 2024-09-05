@@ -1,49 +1,43 @@
 import React, { useState } from 'react';
 import { Table, Button, Modal } from 'antd';
-import { RightOutlined,ArrowLeftOutlined } from '@ant-design/icons';
+import { RightOutlined } from '@ant-design/icons';
+import {ArrowLeftOutlined} from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom';
-
 const columns = [
   {
     title: 'Serial No',
     dataIndex: 'key',
   },
   {
-    title: 'ICP Item Code',
+    title: 'Item Name ',
+    dataIndex: 'item_Name',
+  },
+  {
+    title: ' Item Code',
     dataIndex: 'icp_item_code',
   },
   {
-    title: 'Vendor',
-    dataIndex: 'vendor',
-  },
-  {
-    title: 'Vendor Code',
-    dataIndex: 'vendor_Code',
-  },
-  {
-    title: 'Item Name ',
-    dataIndex: 'item_Name',
+    title: 'Task No',
+    dataIndex: 'task_no',
   },
   {
     title: 'Qty',
     dataIndex: 'qty',
   },
   {
-    title: 'Unit',
-    dataIndex: 'unit',
+    title: 'Availability LMC',
+    dataIndex: 'availability_LMC',
+  },
+  {
+    title: 'Storage Location',
+    dataIndex: 'storage_location',
   },
   {
     title: 'Date',
     dataIndex: 'date',
   },
-  {
-    title: 'Shipped by',
-    dataIndex: 'shipped_by',
-  },
-  {
-    title: 'Availability LMC',
-    dataIndex: 'availability_LMC',
-  },
+  
+ 
 ];
 
 
@@ -51,15 +45,13 @@ const data = [];
 for (let i = 0; i < 46; i++) {
   data.push({
     key: i,
-    icp_item_code: `4827988${i}`,
-    vendor: `John joe${i}`,
-    vendor_Code: `1227244${i}`,
     item_Name: `Lorem`,
+    icp_item_code: `4827988${i}`,
+    task_no: `1227244${i}`, 
     qty: `1${i}`,
-    unit: `Kg`,
+    availability_LMC: `15${i}`,
+    storage_location: `1${i}`,
     date: ' 12/11/23',
-    shipped_by: 'ICP',
-    availability_LMC: `Check`,
   });
 }
 
@@ -119,32 +111,19 @@ const App = () => {
     });
   };
 
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState('Would you like to post Demand Order');
-  const showModal = () => {
-    setOpen(true);
-  };
-  const handleOk = () => {
-    setModalText('Would you like to post Demand Order');
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-      success();
-    }, 1000);
-  };
-  const handleCancel = () => {
-    console.log('Clicked cancel button');
-    setOpen(false);
-  };
-
   const navigate = useNavigate();
 
-  const handleBack = () => {
-    navigate("/demand-list/upload");
+  const handleClick = () => {
+    navigate("/picking-task/pickingselect");
   };
 
+
+
+  const handleBack = () => {
+    navigate("/picking-task");
+  };
+
+  
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -154,25 +133,17 @@ const App = () => {
         dataSource={data}
         scroll={{ y: 440 }}  // Set the height of the table here
       />
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px'  }}>
-        <Button type="primary"  icon={<ArrowLeftOutlined />}
-        onClick={handleBack}
-        >
+       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px' }}>
+    <Button type="primary" icon={<ArrowLeftOutlined />}
+    onClick={handleBack}
+    >
       Back
     </Button>
-        <Button type="primary" onClick={showModal}>
-          Post Demand
-        </Button>
-        <Modal
-          title="Title"
-          open={open}
-          onOk={handleOk}
-          confirmLoading={confirmLoading}
-          onCancel={handleCancel}
-        >
-          <p>{modalText}</p>
-        </Modal>
-      </div>
+    <Button type="primary"
+    onClick={handleClick}>
+      Next
+    </Button>
+  </div>
     </div>
   );
 };

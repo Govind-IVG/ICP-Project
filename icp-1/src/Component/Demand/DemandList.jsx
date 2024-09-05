@@ -7,11 +7,15 @@ import {
   SearchOutlined,
   DownloadOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, Dropdown, Breadcrumb,theme  } from 'antd';
+import { Input, Button, Layout, Menu, Dropdown, Breadcrumb, theme } from 'antd';
 import Upload from './Upload';
 import DemandT from './DemandT';
 import Demandold from './Demandold';
 import { useNavigate, Route, Routes } from 'react-router-dom';
+import ConsignmentHome from '../Consignment/ConsignmentHome';
+import Consinav from '../Consignment/Consinav';
+import Pickingnav from '../Picking/Pickingnav';
+import Searc from '../Searc';
 
 const { Header, Sider, Content } = Layout;
 
@@ -26,22 +30,10 @@ const DemandList = () => {
   const filterMenu = (
     <Menu
       items={[
-        {
-          key: '1',
-          label: 'All',
-        },
-        {
-          key: '2',
-          label: 'Open',
-        },
-        {
-          key: '3',
-          label: 'Close',
-        },
-        {
-          key: '4',
-          label: 'Rejected',
-        },
+        { key: '1', label: 'All' },
+        { key: '2', label: 'Open' },
+        { key: '3', label: 'Close' },
+        { key: '4', label: 'Rejected' },
       ]}
     />
   );
@@ -69,20 +61,40 @@ const DemandList = () => {
         collapsed={collapsed}
         style={{ backgroundColor: 'white' }} // Change sidebar color here
       >
-        <div style={{ padding: '16px', textAlign: 'left' }}>
-          <Button
-            type="primary"
-            icon={<SearchOutlined />}
-            style={{
-              marginLeft: '10px',
-            }}
-          >
-            {collapsed ? '' : 'Search'}
-          </Button>
-        </div>
-
-        <div className="demo-logo-vertical" />
-
+        <div className="demo-logo-vertical"></div>
+            <div style={{ display: 'flex',  alignItems: 'center', marginTop: '15px', marginLeft:'20px' }}>
+              {!collapsed && (
+                <>
+                  <Input placeholder="Search" style={{ width: 100, marginBottom: '5px',padding: '5px' }} />
+                  <Button
+                    // icon={<SearchOutlined />}
+                    style={{
+                      width: 50,
+                      height: 35,
+                      // borderRadius: '50%',
+                      padding: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginLeft:'12px',
+                    }}
+                    
+           > Search</Button>
+                
+                </>
+              )}
+            </div>
+        <h4
+          style={{
+            fontSize: '20px',
+            alignItems: 'center',
+            padding: '5px',
+            marginTop: '10px',
+            fontWeight: '600',
+          }}
+        >
+          {collapsed ? '' : 'Demand No.'}
+        </h4>
         <Menu
           theme="light"
           mode="inline"
@@ -141,18 +153,18 @@ const DemandList = () => {
           </div>
 
           <Button
-              type="primary"
-              icon={<DownloadOutlined />}
-              style={{
-                marginLeft: '16px',
-                display: 'flex', 
-                alignItems: 'right',
-                justifyContent:'flex-end'
-              }}
-              onClick={handleDownload}
-            >
-              Download
-            </Button>
+            type="primary"
+            icon={<DownloadOutlined />}
+            style={{
+              marginLeft: '16px',
+              display: 'flex',
+              alignItems: 'right',
+              justifyContent: 'flex-end',
+            }}
+            onClick={handleDownload}
+          >
+            Download
+          </Button>
         </Header>
 
         <Breadcrumb
@@ -161,18 +173,18 @@ const DemandList = () => {
           items={[
             { title: 'Location' },
             { type: 'separator', separator: ':' },
-            { href: '', title: 'Application Center' },
+            { href: '', title: 'Demand ' },
             { type: 'separator' },
-            { href: '', title: 'Application List' },
+            { href: '', title: 'Table' },
             { type: 'separator' },
-            { title: 'An Application' },
+            { title: '' },
           ]}
         />
         <Content
           style={{
             margin: '10px 8px',
             padding: 24,
-            minHeight: 680,
+            minHeight: 580,
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}
@@ -181,7 +193,11 @@ const DemandList = () => {
             <Route path="/upload" element={<Upload />} />
             <Route path="/demandT" element={<DemandT />} />
             <Route path="/demandold" element={<Demandold />} />
+            <Route path="/consignmentHome" element={<ConsignmentHome />} />
+            <Route path="/consinav" element={<Consinav />} />
+            <Route path="/pickingnav" element={<Pickingnav />} />
           </Routes>
+          {/* <Consinav/> */}
         </Content>
       </Layout>
     </Layout>

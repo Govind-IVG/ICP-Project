@@ -1,5 +1,5 @@
 import React from 'react';
-import { InboxOutlined, UploadOutlined, RightOutlined } from '@ant-design/icons';
+import { InboxOutlined, UploadOutlined, RightOutlined,  ArrowLeftOutlined } from '@ant-design/icons';
 import { message, Upload, Button } from 'antd';
 import { useNavigate } from "react-router-dom";
 
@@ -32,6 +32,12 @@ const App = () => {
   function handleClick() {
     navigate("/demand-list/DemandT");
   }
+
+  
+
+  const handleBack = () => {
+    navigate("/demand-list");
+  };
   return (
     <>
 
@@ -56,11 +62,18 @@ const App = () => {
           </Button>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '40px' }}>
-        <Button type="primary" onClick={handleClick}>
+    
+     
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px' }}>
+    <Button type="primary"  icon={<ArrowLeftOutlined />}
+    onClick={handleBack}
+    >
+      Back
+    </Button>
+    <Button type="primary" onClick={handleClick}>
           Next
         </Button>
-      </div>
+  </div>
     </>
   )
 };
