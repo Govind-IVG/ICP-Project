@@ -152,7 +152,7 @@ const App = () => {
         rowSelection={rowSelection}
         columns={columns}
         dataSource={data}
-        scroll={{ y: 440 }}  // Set the height of the table here
+        scroll={{ y: 400 }}  // Set the height of the table here
       />
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px'  }}>
         <Button type="primary"  icon={<ArrowLeftOutlined />}
