@@ -20,8 +20,8 @@ import Nav from './TabletScreen/Replinish/Nav.jsx'
 function App() {
   return (
     <BrowserRouter>
-      {/* <NavBar /> */}
-      {/* <Routes>
+       <NavBar /> 
+       <Routes>
         <Route path="/demand-list/*" element={<DemandList />} />
         <Route path="/upload" element={<Upload />} />
         <Route path="/demandT" element={<Demand />} />
@@ -34,13 +34,13 @@ function App() {
         <Route path="/pickinghome" element={<Pickinghome/>} />
         <Route path="/pickingselect" element={<Pickingselect />} />
        
-      </Routes> */}
-        <Nav/>
+      </Routes> 
+        {/* <Nav/>
       <Routes>
       <Route path="/" element={<FrontScreen />} />
       <Route path="/item" element={<Item />} />
-      </Routes>
-      {/* <FrontScreen /> */}
+      </Routes> */}
+  
     </BrowserRouter>
   )
 }
