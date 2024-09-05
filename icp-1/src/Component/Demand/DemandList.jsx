@@ -4,10 +4,11 @@ import {
   MenuUnfoldOutlined,
   UploadOutlined,
   FilterOutlined,
+  FilterTwoTone,
   SearchOutlined,
   DownloadOutlined,
 } from '@ant-design/icons';
-import { Input, Button, Layout, Menu, Dropdown, Breadcrumb, theme } from 'antd';
+import { Input, Button, Layout, Menu, Dropdown, Breadcrumb, theme,Space } from 'antd';
 import Upload from './Upload';
 import DemandT from './DemandT';
 import Demandold from './Demandold';
@@ -16,16 +17,54 @@ import ConsignmentHome from '../Consignment/ConsignmentHome';
 import Consinav from '../Consignment/Consinav';
 import Pickingnav from '../Picking/Pickingnav';
 import Searc from '../Searc';
+const handleMenuClick = (e) => {
+  console.log('click', e);
+};
+const { Search } = Input;
+const SearchOptions = [
+  {
+    label: 'All',
+    key: 'option1',
+  },
+  {
+    label: 'New',
+    key: 'option2',
+  },
+  {
+    label: 'Old',
+    key: 'option3',
+  },
+  {
+    label: 'Rejected',
+    key: 'option4',
+  },
+];
+const items = [
+  { key: '1', label: '123457' },
+  { key: '2', label: '1234567' },
+  { key: '4', label: '12345678' },
+  { key: '5', label: '12345678' },
+  { key: '6', label: '12345678' },
+  { key: '7', label: '12345678' },
+];
+const searchDropdownProps = {
+  items: SearchOptions,
+  onClick: handleMenuClick,
+};
 
 const { Header, Sider, Content } = Layout;
 
 const DemandList = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Use the theme's token
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const filteredItems = items.filter(item =>
+    item.label.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const filterMenu = (
     <Menu
@@ -61,7 +100,23 @@ const DemandList = () => {
         collapsed={collapsed}
         style={{ backgroundColor: 'white' , height:'92vh' , overflowY: 'scroll' }} // Change sidebar color here
       >
-        <div className="demo-logo-vertical"></div>
+        <div style={{ padding: '24px 6px 10px', }}>
+            <Input
+              placeholder="Search"
+              onChange={e => setSearchTerm(e.target.value)}
+              style={{ width: '80%' }}
+            />
+            <Dropdown menu={searchDropdownProps}>
+              <Button style={{ width: '20%' }}>
+                <Space>
+                 <FilterTwoTone />
+                </Space>
+              </Button>
+            </Dropdown>
+        </div>
+
+
+        {/* <div className="demo-logo-vertical"></div> */}
             {/* <div style={{ display: 'flex',  alignItems: 'center', marginTop: '15px', marginLeft:'20px' }}>
               {!collapsed && (
                 <>
@@ -88,26 +143,18 @@ const DemandList = () => {
           style={{
             fontSize: '20px',
             alignItems: 'center',
-            padding: '5px',
-            marginTop: '10px',
+            padding: '0px 5px 5px',
             fontWeight: '600',
           }}
         >
-          {collapsed ? '' : 'Demand No.'}
+          Demand No.
         </h4>
         <Menu
           theme="light"
           mode="inline"
           defaultSelectedKeys={['1']}
-          items={[
-            { key: '1', label: '18224565' },
-            { key: '2', label: '18224566' },
-            { key: '3', label: '18224567' },
-            { key: '4', label: '18224568' },
-            { key: '5', label: '18224569' },
-            { key: '6', label: '18224570' },
-           
-          ]}
+          items={filteredItems}
+          
         />
       </Sider>
       <Layout>
