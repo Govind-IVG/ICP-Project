@@ -100,9 +100,16 @@ const Consinav = () => {
             </Dropdown>
           </div>
 
-          <h4 style={{ fontSize: '20px', alignItems: 'center', padding: '5px', marginTop: '10px', fontWeight: '600' }}>
-            {collapsed ? '' : 'Consignment No.'}
-          </h4>
+          <h4
+          style={{
+            fontSize: '20px',
+            alignItems: 'center',
+            padding: '0px 5px 5px',
+            fontWeight: '600',
+          }}
+        >
+          Consignment No.
+        </h4>
 
           <Menu
             theme="light"
