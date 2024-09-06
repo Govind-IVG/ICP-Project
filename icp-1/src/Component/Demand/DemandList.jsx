@@ -67,17 +67,6 @@ const DemandList = () => {
     item.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // const filterMenu = (
-  //   <Menu
-  //     items={[
-  //       { key: '1', label: 'All' },
-  //       { key: '2', label: 'Open' },
-  //       { key: '3', label: 'Close' },
-  //       { key: '4', label: 'Rejected' },
-  //     ]}
-  //   />
-  // );
-
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -116,30 +105,6 @@ const DemandList = () => {
             </Dropdown>
         </div>
 
-
-        {/* <div className="demo-logo-vertical"></div> */}
-            {/* <div style={{ display: 'flex',  alignItems: 'center', marginTop: '15px', marginLeft:'20px' }}>
-              {!collapsed && (
-                <>
-                  <Input placeholder="Search" style={{ width: 100, marginBottom: '5px',padding: '5px' }} />
-                  <Button
-                    // icon={<SearchOutlined />}
-                    style={{
-                      width: 50,
-                      height: 35,
-                      // borderRadius: '50%',
-                      padding: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginLeft:'12px',
-                    }}
-                    
-           > Search</Button>
-                
-                </>
-              )}
-            </div> */}
         <h4
           style={{
             fontSize: '20px',
@@ -179,17 +144,7 @@ const DemandList = () => {
                 height: 64,
               }}
             />
-            {/* <Dropdown overlay={filterMenu} placement="bottomRight" trigger={['click']}>
-              <Button
-                type="default"  
-                icon={<FilterOutlined />}
-                style={{
-                  marginLeft: '16px',
-                }}
-              >
-                Filter
-              </Button>
-            </Dropdown> */}
+           
             <Button
               icon={<UploadOutlined />}
               style={{
