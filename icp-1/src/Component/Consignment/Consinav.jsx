@@ -2,147 +2,116 @@ import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
-  FilterOutlined,
-  SearchOutlined,
+  FilterTwoTone,
   DownloadOutlined,
   PlusOutlined,
   UserOutlined,
   DownOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Space, Menu, Dropdown, Breadcrumb, theme, message, Tooltip } from 'antd';
+import { Button, Layout, Space, Menu, Dropdown, Breadcrumb, theme, Input, message } from 'antd';
 import ConsiTable from './ConsiTable';
 import Createconsignment from './Createconsignment';
 import { useNavigate, Route, Routes } from 'react-router-dom';
 
-// ---------------------------------------------------Nav,Header Start Here
-
 const { Header, Sider, Content } = Layout;
+const { Search } = Input;
 
-const handleButtonClick = (e) => {
-  message.info('Click on left button.');
-  console.log('click left button', e);
-};
-const handleMenuClick = (e) => {
-  message.info('Click on menu item.');
-  console.log('click', e);
-};
-
-// ---------------------------------------------------Dropdown Array Start Here
-
-
-const items = [
-  {
-    label: '18283645',
-    key: '1',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '18283646',
-    key: '2',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '18283647',
-    key: '3',
-    icon: <UserOutlined />,
-    // danger: true,
-  },
-  {
-    label: '18283648',
-    key: '4',
-    icon: <UserOutlined />,
-    // danger: true,
-    // disabled: true,
-  },
+const SearchOptions = [
+  { label: 'All', key: 'option1' },
+  { label: 'New', key: 'option2' },
+  { label: 'Old', key: 'option3' },
+  { label: 'Rejected', key: 'option4' },
 ];
 
-const menuProps = {
-  items,
-  onClick: handleMenuClick,
+const items = [
+  { key: '1', label: '123457' },
+  { key: '2', label: '1234567' },
+  { key: '4', label: '12345678' },
+  { key: '5', label: '12345678' },
+  { key: '6', label: '12345678' },
+  { key: '7', label: '12345678' },
+];
+
+const handleMenuClick = (e) => {
+  message.info(`Clicked on menu item: ${e.key}`);
 };
 
-// ---------------------------------------------------Dropdown Array End Here
+const consitems = [
+  { label: '18283645', key: '1', icon: <UserOutlined /> },
+  { label: '18283646', key: '2', icon: <UserOutlined /> },
+  { label: '18283647', key: '3', icon: <UserOutlined /> },
+  { label: '18283648', key: '4', icon: <UserOutlined /> },
+];
 
 const Consinav = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Use the theme's token
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  // ---------------------------------------------------Top Filter Array Start Here
-
-  const filterMenu = (
-    <Menu
-      items={[
-        {
-          key: '1',
-          label: 'All',
-        },
-        {
-          key: '2',
-          label: 'Open',
-        },
-        {
-          key: '3',
-          label: 'Close',
-        },
-        {
-          key: '4',
-          label: 'Rejected',
-        },
-      ]}
-    />
+  const filteredItems = items.filter(item =>
+    item.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/consignment/consitable");
   };
-  // ---------------------------------------------------Top Filter Array End Here
+
+  const menu = (
+    <Menu
+      items={consitems}
+      onClick={handleMenuClick}
+    />
+  );
+
   return (
     <>
       <Layout>
-        {/*         -------------------------------------Side Bar div  Start Here */}
         <Sider
           trigger={null}
           collapsible
           collapsed={collapsed}
-          style={{ backgroundColor: 'white',height:'92vh' , overflowY: 'scroll' }} // Change sidebar color here
+          style={{ backgroundColor: 'white', height: '92vh', overflowY: 'scroll' }}
         >
-
-          <div style={{ padding: '16px', textAlign: 'left' }}>
-            <Button
-              type="primary"
-              icon={<SearchOutlined />}
-              style={{
-                marginLeft: '10px',
-              }}
+          <div style={{ padding: '24px 6px 10px' }}>
+            <Input
+              placeholder="Search"
+              onChange={e => setSearchTerm(e.target.value)}
+              style={{ width: '80%' }}
+            />
+            <Dropdown
+              overlay={
+                <Menu
+                  items={SearchOptions}
+                  onClick={handleMenuClick}
+                />
+              }
+              menu={{ items: SearchOptions }}
             >
-              {collapsed ? '' : 'Search'}
-            </Button>
-            <h4 style={{ fontSize: '20px', alignItems: 'center', padding: '5px', marginTop: '10px', fontWeight: '600' }}> {collapsed ? '' : 'Consignment No.'}</h4>
+              <Button style={{ width: '20%' }}>
+                <Space>
+                  <FilterTwoTone />
+                </Space>
+              </Button>
+            </Dropdown>
           </div>
 
+          <h4 style={{ fontSize: '20px', alignItems: 'center', padding: '5px', marginTop: '10px', fontWeight: '600' }}>
+            {collapsed ? '' : 'Consignment No.'}
+          </h4>
 
           <Menu
             theme="light"
             mode="inline"
             defaultSelectedKeys={['1']}
-            items={[
-              { key: '1', label: '18224565' },
-              { key: '2', label: '18224566' },
-              { key: '3', label: '18224567' },
-              { key: '4', label: '18224568' },
-              { key: '5', label: '18224569' },
-              { key: '6', label: '18224571' },
-             
-            ]}
+            items={filteredItems}
           />
         </Sider>
-        {/*         -------------------------------------Side Bar div  End Here */}
+
         <Layout>
           {/*         -------------------------------------Header Start Here */}
           <Header
@@ -165,25 +134,6 @@ const Consinav = () => {
                   height: 64,
                 }}
               />
-              <Dropdown overlay={filterMenu} placement="bottomRight" trigger={['click']}>
-                <Button
-                  type="default"
-                  icon={<FilterOutlined />}
-                  style={{
-                    marginLeft: '16px',
-                  }}
-                >
-                  Filter
-                </Button>
-              </Dropdown>
-              {/* <Button
-              icon={<UploadOutlined />}
-              style={{
-                marginLeft: '16px',
-              }}
-            >
-              Upload
-            </Button> */}
               <Button
                 type="primary"
                 icon={<PlusOutlined />}
@@ -193,71 +143,47 @@ const Consinav = () => {
                 Add New
               </Button>
 
-              <Dropdown menu={menuProps}>
-                <Button style={{
-                  marginLeft: '16px',
-                }}>
+              <Dropdown overlay={menu}>
+                <Button style={{ marginLeft: '16px' }}>
                   <Space>
                     Demand No
                     <DownOutlined />
                   </Space>
                 </Button>
               </Dropdown>
-
             </div>
             <Button
               type="primary"
               icon={<DownloadOutlined />}
-              style={{
-                marginLeft: '16px',
-                display: 'flex',
-                alignItems: 'right',
-                justifyContent: 'flex-end',
-              }}
+              style={{ marginLeft: '16px', display: 'flex', alignItems: 'right', justifyContent: 'flex-end' }}
             >
               Download
             </Button>
           </Header>
 
-          {/*         -------------------------------------Header End Here */}
-
-          {/*         -------------------------------------Location Showing Start Here */}
-          <Breadcrumb
-            separator=""
-            style={{ marginTop: '8px', marginLeft: '8px' }}
-          >
+          <Breadcrumb separator="" style={{ marginTop: '8px', marginLeft: '8px' }}>
             <Breadcrumb.Item>Location</Breadcrumb.Item>
             <Breadcrumb.Separator>:</Breadcrumb.Separator>
             <Breadcrumb.Item>Consignment creation</Breadcrumb.Item>
             <Breadcrumb.Separator>/</Breadcrumb.Separator>
             <Breadcrumb.Item>Number</Breadcrumb.Item>
-            {/* <Breadcrumb.Separator>/</Breadcrumb.Separator>
-            <Breadcrumb.Item></Breadcrumb.Item> */}
           </Breadcrumb>
-          {/* -------------------------------------Location Showing End Here */}
-
-          {/* ---------------------------------Main Contect Start Here */}
 
           <Content
             style={{
               margin: '10px 8px',
               padding: 15,
-            minHeight: 500,
+              minHeight: 500,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}
           >
-            {/* <Createconsignment/> */}
-            {/* <ConsiTable /> */}
             <Routes>
               <Route path="/consitable" element={<ConsiTable />} />
               <Route path="/createconsignment" element={<Createconsignment />} />
             </Routes>
           </Content>
-          {/* ---------------------------------Main Contect End Here */}
-
         </Layout>
-
       </Layout>
     </>
   );

@@ -2,95 +2,77 @@ import React, { useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
+  FilterTwoTone,
   FilterOutlined,
-  SearchOutlined,
   DownloadOutlined,
   PlusOutlined,
   UserOutlined,
   DownOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Space, Menu, Dropdown, Breadcrumb, theme, message, Radio } from 'antd';
+import { Button, Layout, Space, Menu, Dropdown, Breadcrumb, theme, Input, message } from 'antd';
 import Pickinghome from './Pickinghome';
-import Createconsignment from '../Consignment/Createconsignment';
 import Pickingselect from './Pickingselect';
 import { useNavigate, Route, Routes } from 'react-router-dom';
 
-
-
 const { Header, Sider, Content } = Layout;
+const { Search } = Input;
 
-const handleButtonClick = (e) => {
-  message.info('Click on left button.');
-  console.log('click left button', e);
-};
+const SearchOptions = [
+  { label: 'All', key: 'option1' },
+  { label: 'New', key: 'option2' },
+  { label: 'Old', key: 'option3' },
+  { label: 'Rejected', key: 'option4' },
+];
+
+const items = [
+  { label: '18283645', key: '1', icon: <UserOutlined /> },
+  { label: '18283646', key: '2', icon: <UserOutlined /> },
+  { label: '18283647', key: '3', icon: <UserOutlined /> },
+  { label: '18283648', key: '4', icon: <UserOutlined /> },
+];
 
 const handleMenuClick = (e) => {
   message.info('Click on menu item.');
-  console.log('click', e);
+  console.log('click:', e);
 };
 
-const items = [
-  {
-    label: '18283645',
-    key: '1',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '18283646',
-    key: '2',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '18283647',
-    key: '3',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '18283648',
-    key: '4',
-    icon: <UserOutlined />,
-  },
+const pickitems = [
+  { key: '1', label: '123457' },
+  { key: '2', label: '1234567' },
+  { key: '4', label: '12345678' },
+  { key: '5', label: '12345678' },
+  { key: '6', label: '12345678' },
+  { key: '7', label: '12345678' },
 ];
-
-const menuProps = {
-  items,
-  onClick: handleMenuClick,
-};
-
 
 const Pickingnav = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Use the theme's token
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  const filteredItems = pickitems.filter(item =>
+    item.label.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const filterMenu = (
     <Menu
       items={[
-        {
-          key: '1',
-          label: 'All',
-        },
-        {
-          key: '2',
-          label: 'Assgin',
-        },
-        {
-          key: '3',
-          label: 'Unassgin',
-        },
-       
+        { key: '1', label: 'All' },
+        { key: '2', label: 'Assign' },
+        { key: '3', label: 'Unassign' },
       ]}
     />
   );
+
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/picking-task/pickinghome");
   };
+
   return (
     <>
       <Layout>
@@ -98,34 +80,32 @@ const Pickingnav = () => {
           trigger={null}
           collapsible
           collapsed={collapsed}
-          style={{ backgroundColor: 'white',height:'92vh' , overflowY: 'scroll' }} // Change sidebar color here
+          style={{ backgroundColor: 'white', height: '92vh', overflowY: 'scroll' }}
         >
-          <div style={{ padding: '16px', textAlign: 'left' }}>
-            <Button
-              type="primary"
-              icon={<SearchOutlined />}
-              style={{
-                marginLeft: '10px',
-              }}
+          <div style={{ padding: '24px 6px 10px' }}>
+            <Input
+              placeholder="Search"
+              onChange={e => setSearchTerm(e.target.value)}
+              style={{ width: '80%' }}
+            />
+            <Dropdown
+              menu={{ items: SearchOptions }}
             >
-              {collapsed ? '' : 'Search'}
-            </Button>
-            <h4 style={{ fontSize: '20px', alignItems: 'center', padding: '5px', marginTop: '10px', fontWeight: '600' }}> {collapsed ? '' : 'Picking No.'}</h4>
+              <Button style={{ width: '20%' }}>
+                <Space>
+                  <FilterTwoTone />
+                </Space>
+              </Button>
+            </Dropdown>
           </div>
-
+          <h4 style={{ fontSize: '20px', alignItems: 'center', padding: '5px', marginTop: '10px', fontWeight: '600' }}>
+            {collapsed ? '' : 'Picking No.'}
+          </h4>
           <Menu
             theme="light"
             mode="inline"
             defaultSelectedKeys={['1']}
-            items={[
-              { key: '1', label: '18224565' },
-              { key: '2', label: '18224566' },
-              { key: '3', label: '18224567' },
-              { key: '4', label: '18224568' },
-              { key: '5', label: '18224569' },
-              { key: '6', label: '18224571' },
-              
-            ]}
+            items={filteredItems}
           />
         </Sider>
         <Layout>
@@ -139,29 +119,17 @@ const Pickingnav = () => {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              
               <Button
                 type="text"
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                 onClick={() => setCollapsed(!collapsed)}
-                style={{
-                  fontSize: '16px',
-                  width: 64,
-                  height: 64,
-                }}
+                style={{ fontSize: '16px', width: 64, height: 64 }}
               />
-               <Dropdown overlay={filterMenu} placement="bottomRight" trigger={['click']}>
-              <Button
-                type="default"
-                icon={<FilterOutlined />}
-                style={{
-                  marginLeft: '16px',
-                }}
-              >
-                Filter
-              </Button>
-            </Dropdown>
-
+              <Dropdown overlay={filterMenu} placement="bottomRight" trigger={['click']}>
+                <Button type="default" icon={<FilterOutlined />} style={{ marginLeft: '16px' }}>
+                  Filter
+                </Button>
+              </Dropdown>
               <Button
                 type="primary"
                 icon={<PlusOutlined />}
@@ -170,38 +138,26 @@ const Pickingnav = () => {
               >
                 Add New
               </Button>
-
-              <Dropdown menu={menuProps}>
+              <Dropdown
+                menu={{ items, onClick: handleMenuClick }} 
+              >
                 <Button style={{ marginLeft: '16px' }}>
                   <Space>
-                   Consignment
+                    Consignment
                     <DownOutlined />
                   </Space>
                 </Button>
               </Dropdown>
             </div>
-
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-           
-
-              <Button
-                type="primary"
-                icon={<DownloadOutlined />}
-                style={{
-                  marginLeft: '16px',
-                  display: 'flex',
-                  alignItems: 'right',
-                  justifyContent: 'flex-end',
-                }}
-              >
-                Download
-              </Button>
-            </div>
+            <Button
+              type="primary"
+              icon={<DownloadOutlined />}
+              style={{ marginLeft: '16px', display: 'flex', alignItems: 'right', justifyContent: 'flex-end' }}
+            >
+              Download
+            </Button>
           </Header>
-          <Breadcrumb
-            separator=""
-            style={{ marginTop: '8px', marginLeft: '8px' }}
-          >
+          <Breadcrumb separator="" style={{ marginTop: '8px', marginLeft: '8px' }}>
             <Breadcrumb.Item>Location</Breadcrumb.Item>
           </Breadcrumb>
           <Content
@@ -213,12 +169,10 @@ const Pickingnav = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-             <Routes>
-              <Route path="/pickinghome" element={<Pickinghome/>} />
+            <Routes>
+              <Route path="/pickinghome" element={<Pickinghome />} />
               <Route path="/pickingselect" element={<Pickingselect />} />
             </Routes>
-            {/* <Pickinghome />
-            <Pickingselect /> */}
           </Content>
         </Layout>
       </Layout>

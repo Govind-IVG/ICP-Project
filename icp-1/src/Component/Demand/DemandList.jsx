@@ -62,20 +62,21 @@ const DemandList = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  
   const filteredItems = items.filter(item =>
     item.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const filterMenu = (
-    <Menu
-      items={[
-        { key: '1', label: 'All' },
-        { key: '2', label: 'Open' },
-        { key: '3', label: 'Close' },
-        { key: '4', label: 'Rejected' },
-      ]}
-    />
-  );
+  // const filterMenu = (
+  //   <Menu
+  //     items={[
+  //       { key: '1', label: 'All' },
+  //       { key: '2', label: 'Open' },
+  //       { key: '3', label: 'Close' },
+  //       { key: '4', label: 'Rejected' },
+  //     ]}
+  //   />
+  // );
 
   const navigate = useNavigate();
 
@@ -178,9 +179,9 @@ const DemandList = () => {
                 height: 64,
               }}
             />
-            <Dropdown overlay={filterMenu} placement="bottomRight" trigger={['click']}>
+            {/* <Dropdown overlay={filterMenu} placement="bottomRight" trigger={['click']}>
               <Button
-                type="default"
+                type="default"  
                 icon={<FilterOutlined />}
                 style={{
                   marginLeft: '16px',
@@ -188,7 +189,7 @@ const DemandList = () => {
               >
                 Filter
               </Button>
-            </Dropdown>
+            </Dropdown> */}
             <Button
               icon={<UploadOutlined />}
               style={{
