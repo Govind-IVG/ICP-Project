@@ -17,33 +17,42 @@ const { Header, Sider, Content } = Layout;
 const { Search } = Input;
 
 const SearchOptions = [
-  { label: 'All', key: 'all' },
-  { label: 'New', key: 'new' },
-  { label: 'Old', key: 'old' },
-  { label: 'Rejected', key: 'rejected' },
+  { label: 'All', key: 'option1' },
+  { label: 'New', key: 'option2' },
+  { label: 'Old', key: 'option3' },
+  { label: 'Rejected', key: 'option4' },
 ];
 
 const items = [
-  { key: '1', label: '123457', type: 'new' },
-  { key: '2', label: '1234567', type: 'old' },
-  { key: '4', label: '12345678', type: 'rejected' },
-  { key: '5', label: '12345678', type: 'new' },
-  { key: '6', label: '12345678', type: 'old' },
-  { key: '7', label: '12345678', type: 'rejected' },
+  { key: '1', label: '123457' },
+  { key: '2', label: '1234567' },
+  { key: '4', label: '12345678' },
+  { key: '5', label: '12345678' },
+  { key: '6', label: '12345678' },
+  { key: '7', label: '12345678' },
+];
+
+const handleMenuClick = (e) => {
+  message.info(`Clicked on menu item: ${e.key}`);
+};
+
+const consitems = [
+  { label: '18283645', key: '1', icon: <UserOutlined /> },
+  { label: '18283646', key: '2', icon: <UserOutlined /> },
+  { label: '18283647', key: '3', icon: <UserOutlined /> },
+  { label: '18283648', key: '4', icon: <UserOutlined /> },
 ];
 
 const Consinav = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filter, setFilter] = useState('all'); // New state to store selected filter
 
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const filteredItems = items.filter(item =>
-    item.label.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (filter === 'all' || item.type === filter)
+    item.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const navigate = useNavigate();
@@ -52,22 +61,15 @@ const Consinav = () => {
     navigate("/consignment/consitable");
   };
 
-  const handleMenuClick = (e) => {
-    setFilter(e.key);
-  };
+  const menu = (
+    <Menu
+      items={consitems}
+      onClick={handleMenuClick}
+    />
+  );
 
-  const getItemStyle = (type) => {
-    switch (type) {
-      case 'new':
-        return { color: 'green' };
-      case 'old':
-        return { color: 'blue' };
-      case 'rejected':
-        return { color: 'red' };
-      default:
-        return {};
-    }
-  };
+
+  //tests
 
   return (
     <>
@@ -91,6 +93,7 @@ const Consinav = () => {
                   onClick={handleMenuClick}
                 />
               }
+              menu={{ items: SearchOptions }}
             >
               <Button style={{ width: '20%' }}>
                 <Space>
@@ -100,23 +103,27 @@ const Consinav = () => {
             </Dropdown>
           </div>
 
-          <h4 style={{ fontSize: '20px', alignItems: 'center', padding: '5px', marginTop: '10px', fontWeight: '600' }}>
-            {collapsed ? '' : 'Consignment No.'}
-          </h4>
+          <h4
+          style={{
+            fontSize: '20px',
+            alignItems: 'center',
+            padding: '0px 5px 5px',
+            fontWeight: '600',
+          }}
+        >
+          Consignment No.
+        </h4>
 
           <Menu
             theme="light"
             mode="inline"
             defaultSelectedKeys={['1']}
-            items={filteredItems.map(item => ({
-              ...item,
-              style: getItemStyle(item.type), // Apply different colors based on item type
-            }))}
+            items={filteredItems}
           />
         </Sider>
 
         <Layout>
-          {/* -------------------------------------Header Start Here */}
+          {/*         -------------------------------------Header Start Here */}
           <Header
             style={{
               padding: '0 16px',
@@ -146,7 +153,7 @@ const Consinav = () => {
                 Add New
               </Button>
 
-              <Dropdown overlay={Menu}>
+              <Dropdown overlay={menu}>
                 <Button style={{ marginLeft: '16px' }}>
                   <Space>
                     Demand No
@@ -168,9 +175,11 @@ const Consinav = () => {
             <Breadcrumb.Item>Location</Breadcrumb.Item>
             <Breadcrumb.Separator>:</Breadcrumb.Separator>
             <Breadcrumb.Item>Consignment creation</Breadcrumb.Item>
-            <Breadcrumb.Separator>/</Breadcrumb.Separator>
+            {/* <Breadcrumb.Separator>/</Breadcrumb.Separator> */}
             <Breadcrumb.Item>Number</Breadcrumb.Item>
           </Breadcrumb>
+
+
 
           <Content
             style={{
