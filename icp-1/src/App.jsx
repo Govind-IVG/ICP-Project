@@ -38,7 +38,7 @@ function App() {
         {/* <Nav/>
       <Routes>
       <Route path="/" element={<FrontScreen />} />
-      <Route path="/item" element={<Item />} />
+      <Route path="/item" element={<Item />} />ssssssssssssssss
       </Routes> */}
   
     </BrowserRouter>
