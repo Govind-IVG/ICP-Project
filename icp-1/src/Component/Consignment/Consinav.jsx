@@ -172,7 +172,7 @@ const Consinav = () => {
             <Breadcrumb.Item>Location</Breadcrumb.Item>
             <Breadcrumb.Separator>:</Breadcrumb.Separator>
             <Breadcrumb.Item>Consignment creation</Breadcrumb.Item>
-            <Breadcrumb.Separator>/</Breadcrumb.Separator>
+            {/* <Breadcrumb.Separator>/</Breadcrumb.Separator> */}
             <Breadcrumb.Item>Number</Breadcrumb.Item>
           </Breadcrumb>
 
